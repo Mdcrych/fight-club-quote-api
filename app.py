@@ -1,18 +1,32 @@
+import random
+
 from fastapi import FastAPI
 
-app = FastAPI(title="Fight Club Quote API", version="1.0.0")
+app = FastAPI(title="Original Quotes API", version="1.1.0")
 
-QUOTE = "The first rule of Fight Club is: you do not talk about Fight Club."
+QUOTES = [
+    "Вещи, которыми ты владеешь, не должны владеть тобой.",
+    "Страх не исчезает. Ты просто перестаёшь давать ему команды.",
+    "Перемены начинаются не с правильных слов, а с поступка.",
+    "Не путай комфорт с жизнью.",
+    "Иногда нужно потерять привычное, чтобы увидеть себя.",
+    "Свобода начинается там, где заканчивается желание всем понравиться.",
+    "Ты не обязан быть удобной версией себя.",
+]
 
 
 @app.get("/", tags=["service"])
 def root() -> dict[str, str]:
-    return {"service": "fight-club-quote-api", "status": "ok"}
+    return {"service": "original-quotes-api", "status": "ok"}
 
 
 @app.get("/quote", tags=["quote"])
 def get_quote() -> dict[str, str]:
-    return {"quote": QUOTE, "source": "Fight Club"}
+    return {
+        "quote": random.choice(QUOTES),
+        "language": "ru",
+        "source": "Original phrase",
+    }
 
 
 @app.get("/health", tags=["service"])
